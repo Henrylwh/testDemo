@@ -60,8 +60,66 @@ function add_book() {
 			text : '提交',
 			handler : function() {
 				var thisForm = input_form.getForm();
+				var bookValues = thisForm.getValues();
+				console.log(bookValues);
 				if(thisForm.isValid()){
+					Ext.Ajax.request({
+						url : '/test/book/addBook',
+						params : {
+							bookValues : Ext.JSON.encode(bookValues)
+						},
+						success : function(resp,opts) {
+							var respText = Ext.JSON.decode(resp.responseText);
+							if(respText.success == true)
+							{
+								Ext.Msg.alert('信息框', '添加书籍成功');
+								Ext.getCmp('input_form').getForm().reset();
+								Ext.getCmp('book_grid').getStore().reload();
+								Ext.getCmp('book_grid').getSelectionModel().deselectAll();
+								//添加成功后，关闭窗口
+								add_win.close();
+							}
+							else if(respText.success==undefined || respText.success==false)
+							{
+								Ext.Msg.show({
+									title : '操作失败',
+									msg : "errorNo:"+respText.errorNo+",errorInfo:"+respText.errorInfo,
+									buttons : Ext.Msg.OK,
+									icon : Ext.Msg.INFO
+								});
+							}
+							else if(respText.success==undefined)
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+							
+						},
+						failure : function(resp,opts) {
+							var respText = Ext.JSON.decode(resp.responseText); 
+							if(respText.success==undefined || respText.success==false)
+							{
+								Ext.Msg.show({
+									title : '操作失败',
+									msg : "errorNo:"+respText.errorNo+",errorInfo:"+respText.errorInfo,
+									buttons : Ext.Msg.OK,
+									icon : Ext.Msg.INFO
+								});
+							}
+							else if(respText.success==undefined)
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+							else
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+						}
+					});
+					/*
 					input_form.getForm().submit({
+						params: {  userValues },  
+			            waitMsg: '正在处理',  
+			            waitTitle: '请等待', 
 						success : function(input_form, action) {
 							if(action.result.success==undefined || action.result.success==false)
 							{
@@ -102,7 +160,7 @@ function add_book() {
 								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
 							}
 						}
-					});
+					});*/
 				}
 			}
 		}, {
@@ -145,7 +203,7 @@ function delete_book() {
 					Ext.Ajax.request({
 						url : '/test/book/deleteBook',
 						params : {
-							id : record.get('id')
+							idString : Ext.JSON.encode({id:55})  //Ext.JSON.encode({id:record.get('id')})
 						},
 						success : function(resp,opts) {
 							var respText = Ext.JSON.decode(resp.responseText);
@@ -232,7 +290,7 @@ function edit_book(record) {
 						name : 'id',
 						value:record.get("id"),
 						width : 300,
-		         		readOnly: true
+		         		readOnly: false
 					},
 					{
 						fieldLabel : '书名',
@@ -272,7 +330,62 @@ function edit_book(record) {
 			text : '提交',
 			handler : function() {
 				var thisForm = input_form.getForm();
+				var bookValues = thisForm.getValues();
+				console.log(bookValues);
 				if(thisForm.isValid()){
+					Ext.Ajax.request({
+						url : '/test/book/updateBook',
+						params : {
+							bookValues : Ext.JSON.encode(bookValues)
+						},
+						success : function(resp,opts) {
+							var respText = Ext.JSON.decode(resp.responseText);
+							if(respText.success == true)
+							{
+								Ext.Msg.alert('信息框', '更新成功');
+								Ext.getCmp('input_form').getForm().reset();
+								Ext.getCmp('book_grid').getStore().reload();
+								Ext.getCmp('book_grid').getSelectionModel().deselectAll();
+								//更新成功后，关闭窗口
+								edit_win.close();
+							}
+							else if(respText.success==undefined || respText.success==false)
+							{
+								Ext.Msg.show({
+									title : '操作失败',
+									msg : "errorNo:"+respText.errorNo+",errorInfo:"+respText.errorInfo,
+									buttons : Ext.Msg.OK,
+									icon : Ext.Msg.INFO
+								});
+							}
+							else if(respText.success==undefined)
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+							
+						},
+						failure : function(resp,opts) {
+							var respText = Ext.JSON.decode(resp.responseText); 
+							if(respText.success==undefined || respText.success==false)
+							{
+								Ext.Msg.show({
+									title : '操作失败',
+									msg : "errorNo:"+respText.errorNo+",errorInfo:"+respText.errorInfo,
+									buttons : Ext.Msg.OK,
+									icon : Ext.Msg.INFO
+								});
+							}
+							else if(respText.success==undefined)
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+							else
+							{
+								Ext.Msg.alert('操作失败', "您的操作报错，请联系管理员！");
+							}
+						}
+					});
+					/*
 					input_form.getForm().submit({
 						success : function(input_form, action) {
 							Ext.Msg.alert('信息框', '更新成功');
@@ -303,6 +416,7 @@ function edit_book(record) {
 							}
 						}
 					});
+					*/
 				}
 			}
 		}]

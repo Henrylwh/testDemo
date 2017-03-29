@@ -41,7 +41,11 @@ public class DatabaseController {
 	
 	@RequestMapping(value = { "/addBook" }, method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject addBook(BookModel bookModel) {
+	public JSONObject addBook(String bookValues) {
+		JSONObject questJson=JSONObject.parseObject(bookValues);
+		
+		BookModel bookModel= (BookModel)JSONObject.toJavaObject(questJson,BookModel.class);
+		
 		
 		int result=bookService.addBook(bookModel);
 		JSONObject resultJson = new JSONObject();
@@ -64,7 +68,11 @@ public class DatabaseController {
 	
 	@RequestMapping(value = { "/updateBook" }, method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject updateBook(BookModel bookModel) {
+	public JSONObject updateBook(String bookValues) {
+		
+		JSONObject questJson=JSONObject.parseObject(bookValues);
+		BookModel bookModel= (BookModel)JSONObject.toJavaObject(questJson,BookModel.class);
+		
 		int result=bookService.updateBook(bookModel);
 		JSONObject resultJson = new JSONObject();
 		
@@ -86,7 +94,9 @@ public class DatabaseController {
 	
 	@RequestMapping(value = { "/deleteBook" }, method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject deleteBook(int id) {
+	public JSONObject deleteBook(String idString) {
+		JSONObject questJson=JSONObject.parseObject(idString);
+		int id=questJson.getIntValue("id");
 		int result=bookService.deleteBook(id);
 		JSONObject resultJson = new JSONObject();
 		
