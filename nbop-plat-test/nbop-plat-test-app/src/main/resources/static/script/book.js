@@ -51,8 +51,8 @@ function add_book() {
 					fieldLabel : '摘要',
 					allowBlank : false,
 					name : 'digest',
-					width : 700,
-					height : 400,
+					width : 500,
+					height : 200,
 	         		readOnly: false 
 				}
 				],
@@ -321,8 +321,8 @@ function edit_book(record) {
 						fieldLabel : '摘要',
 						allowBlank : false,
 						name : 'digest',
-						width : 700,
-						height : 400,
+						width : 500,
+						height : 200,
 						value:record.get("digest"),
 		         		readOnly: false 
 					}],
