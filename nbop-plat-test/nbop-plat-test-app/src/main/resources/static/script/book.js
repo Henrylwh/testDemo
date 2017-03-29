@@ -203,7 +203,7 @@ function delete_book() {
 					Ext.Ajax.request({
 						url : '/test/book/deleteBook',
 						params : {
-							idString : Ext.JSON.encode({id:55})  //Ext.JSON.encode({id:record.get('id')})
+							idString : Ext.JSON.encode({id:record.get('id')})
 						},
 						success : function(resp,opts) {
 							var respText = Ext.JSON.decode(resp.responseText);
