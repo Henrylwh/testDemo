@@ -1,0 +1,14 @@
+[
+    {
+        text : '图书管理',
+        icon: '/images/user.png',
+        children : [
+            {
+                text : '图书管理',
+                icon: '/images/book.png',
+                id : 'book_manage',
+                leaf : true
+            }
+        ]
+    }
+]
