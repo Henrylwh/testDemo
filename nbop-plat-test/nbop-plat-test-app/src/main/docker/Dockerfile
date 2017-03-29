@@ -1,10 +1,10 @@
 
 #开发支持平台
-FROM docker.gf.com.cn/gf-java:8u20
+FROM lwieske/java-8
 
 
-ADD nbop-plat-dev-app.jar   /nbop/nbop-plat-dev-app.jar
+ADD nbop-plat-test-app.jar   /nbop/nbop-plat-test-app.jar
 
-EXPOSE 8250
+EXPOSE 8080
 
-CMD java -jar /nbop/nbop-plat-dev-app.jar
+CMD java -jar /nbop/nbop-plat-test-app.jar
